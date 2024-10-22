@@ -41,6 +41,7 @@ class GenQr(QWidget):
 
         self.generate.clicked.connect(self.btn_click)
         self.reset.clicked.connect(self.btn_click)
+
         #button click functionality
     def btn_click(self):
         btn = app.sender()
@@ -60,7 +61,18 @@ class GenQr(QWidget):
                 qr.add_data(self.text_box.text())
                 qr.make(fit=True)
                 qr_img = qr.make_image(fill_color='black', back_color='white')
-                qr_img.save(f"{name}.png")
+                # Define absolute path
+                path = "/home/nattz/Pictures/qrcode"  # Unix/Linux
+                # path = r"C:\Users\nattz\Pictures\qrcode"  # Windows
+
+                # Create directory if needed
+                if not os.path.exists(path):
+                    os.makedirs(path)
+
+                # Save QR code with filename
+                filename = f"{name}.png"
+                save_path = os.path.join(path, filename)
+                qr_img.save(save_path)
           elif not (qr_txt.startswith('https://') or qr_txt.startswith('http://')):
               QMessageBox.critical(None, "Error", "Invalid URL. Please enter a URL starting with http:// or https://")
 

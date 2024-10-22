@@ -1,10 +1,10 @@
 import qrcode
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QWidget, QPushButton, QDialog, QHBoxLayout, QVBoxLayout, QLineEdit, QApplication
+from PyQt5.QtWidgets import QWidget, QInputDialog, QPushButton, QDialog, QHBoxLayout, QVBoxLayout, QLineEdit, QApplication
 
 
 
-class gen_qr(QWidget):
+class GenQr(QWidget):
     def __init__(self):
         super().__init__()
         self.name = None
@@ -22,7 +22,9 @@ class gen_qr(QWidget):
 
         self.reset = QPushButton('reset')
         self.backspace = QPushButton('backspace')
+        self.generate = QPushButton('generate')
         self.backspace.setStyleSheet("QPushButton{color: #ff0;}")
+        self.generate.setStyleSheet("QPushButton{color: green;}")
         self.reset.setStyleSheet("QPushButton{color: red;}")
         btn_layout = QHBoxLayout()
 
@@ -31,13 +33,37 @@ class gen_qr(QWidget):
 
         main_layout.addWidget(self.text_box)
         btn_layout.addWidget(self.reset)
+        btn_layout.addWidget(self.generate)
         btn_layout.addWidget(self.backspace)
         main_layout.addLayout(btn_layout)
         self.setLayout(main_layout)
 
+        self.generate.clicked.connect(self.btn_click)
+        #button click functionality
+    def btn_click(self):
+        btn = app.sender()
+        txt = btn.text()
+        qr_txt = self.text_box.text()
+        print(qr_txt)
+        if txt == 'generate':
+          if qr_txt.startswith('https://') or qr_txt.startswith('http://'):
+            name, ok = QInputDialog.getText(None, 'input dialog', 'type a name for the qrcode')
+            if ok:
+                qr = qrcode.QRCode(
+                    version=1,
+                    error_correction = qrcode.constants.ERROR_CORRECT_L,
+                    box_size = 10,
+                    border = 5,
+                )
+                qr.add_data(self.text_box.text())
+                qr.make(fit=True)
+                qr_img = qr.make_image(fill_color='black', back_color='white')
+                qr_img.save(f"{name}.png")
+
+
 if __name__ in '__main__':
     app = QApplication([])
-    main_window = gen_qr()
+    main_window = GenQr()
     main_window.show()
     app.exec_()
 

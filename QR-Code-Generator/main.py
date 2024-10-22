@@ -1,7 +1,8 @@
 import qrcode
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QWidget, QInputDialog, QPushButton, QDialog, QHBoxLayout, QVBoxLayout, QLineEdit, QApplication
-
+from PyQt5.QtWidgets import QWidget, QInputDialog, QPushButton, QDialog, QHBoxLayout, QVBoxLayout, QLineEdit, \
+    QApplication, QMessageBox
+import os
 
 
 class GenQr(QWidget):
@@ -39,6 +40,7 @@ class GenQr(QWidget):
         self.setLayout(main_layout)
 
         self.generate.clicked.connect(self.btn_click)
+        self.reset.clicked.connect(self.btn_click)
         #button click functionality
     def btn_click(self):
         btn = app.sender()
@@ -59,6 +61,12 @@ class GenQr(QWidget):
                 qr.make(fit=True)
                 qr_img = qr.make_image(fill_color='black', back_color='white')
                 qr_img.save(f"{name}.png")
+          elif not (qr_txt.startswith('https://') or qr_txt.startswith('http://')):
+              QMessageBox.critical(None, "Error", "Invalid URL. Please enter a URL starting with http:// or https://")
+
+        elif txt == 'reset':
+            self.text_box.setText('')
+
 
 
 if __name__ in '__main__':

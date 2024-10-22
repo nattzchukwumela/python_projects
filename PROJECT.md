@@ -59,7 +59,7 @@ To clone and run these projects, you'll need [Git](https://git-scm.com) and [Pyt
 
 ```bash
 # Clone this repository
-git clone [git@github.com:nattzchukwumela/python_project.git]
+git clone git@github.com:nattzchukwumela/python_project.git
 
 # Go into the repository
 cd [python_project]
@@ -76,4 +76,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 Praise Chukwumela - [chukwumelapraise@gmail.com](mailto:chukwumelapraise@gmail.com)
-Project Link: [https://github.com/nattzchukwumela/python_project.git](git@github.com:nattzchukwumela/python_project.git)
+Project Link: [https://github.com/nattzchukwumela/python_projects.git]

@@ -1,6 +1,7 @@
 import qrcode
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QWidget, QPushButton, QDialog, QHBoxLayout, QVBoxLayout, QLineEdit
+from PyQt5.QtWidgets import QWidget, QPushButton, QDialog, QHBoxLayout, QVBoxLayout, QLineEdit, QApplication
+
 
 
 class gen_qr(QWidget):
@@ -21,8 +22,25 @@ class gen_qr(QWidget):
 
         self.reset = QPushButton('reset')
         self.backspace = QPushButton('backspace')
+        self.backspace.setStyleSheet("QPushButton{color: #ff0;}")
+        self.reset.setStyleSheet("QPushButton{color: red;}")
+        btn_layout = QHBoxLayout()
 
         #App widgets/layouts
+        main_layout = QVBoxLayout()
+
+        main_layout.addWidget(self.text_box)
+        btn_layout.addWidget(self.reset)
+        btn_layout.addWidget(self.backspace)
+        main_layout.addLayout(btn_layout)
+        self.setLayout(main_layout)
+
+if __name__ in '__main__':
+    app = QApplication([])
+    main_window = gen_qr()
+    main_window.show()
+    app.exec_()
+
 
 
 

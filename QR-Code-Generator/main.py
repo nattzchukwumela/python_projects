@@ -1,7 +1,7 @@
 import qrcode
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QWidget, QInputDialog, QPushButton, QDialog, QHBoxLayout, QVBoxLayout, QLineEdit, \
-    QApplication, QMessageBox
+    QApplication, QMessageBox, QFileDialog
 import os
 
 
@@ -45,13 +45,11 @@ class GenQr(QWidget):
         #button click functionality
     def btn_click(self):
         btn = app.sender()
-        txt = btn.text()
+        self.text = btn.text()
         qr_txt = self.text_box.text()
         print(qr_txt)
-        if txt == 'generate':
+        if self.text == 'generate':
           if qr_txt.startswith('https://') or qr_txt.startswith('http://'):
-            name, ok = QInputDialog.getText(None, 'input dialog', 'type a name for the qrcode')
-            if ok:
                 qr = qrcode.QRCode(
                     version=1,
                     error_correction = qrcode.constants.ERROR_CORRECT_L,
@@ -61,22 +59,23 @@ class GenQr(QWidget):
                 qr.add_data(self.text_box.text())
                 qr.make(fit=True)
                 qr_img = qr.make_image(fill_color='black', back_color='white')
-                # Define absolute path
-                path = "/home/nattz/Pictures/qrcode"  # Unix/Linux
-                # path = r"C:\Users\nattz\Pictures\qrcode"  # Windows
 
-                # Create directory if needed
-                if not os.path.exists(path):
-                    os.makedirs(path)
+                # choose a path to save the image
+                self.name, _ = QFileDialog.getSaveFileName(
+                    self,
+                    "Save QR Code",
+                    os.getcwd(),
+                    "PNG Image (*.png)"
+                    )
 
-                # Save QR code with filename
-                filename = f"{name}.png"
-                save_path = os.path.join(path, filename)
+                # Choose directory to save file
+
+                save_path = os.path.join(self.name)
                 qr_img.save(save_path)
           elif not (qr_txt.startswith('https://') or qr_txt.startswith('http://')):
               QMessageBox.critical(None, "Error", "Invalid URL. Please enter a URL starting with http:// or https://")
 
-        elif txt == 'reset':
+        elif self.text == 'reset':
             self.text_box.setText('')
 
 

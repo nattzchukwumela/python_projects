@@ -12,7 +12,7 @@ virtualenv/
 # PyInstaller
 dist/
 build/
-
+.idea/
 # Logs
 *.log
 

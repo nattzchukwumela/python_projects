@@ -92,7 +92,7 @@ class GenQr(QWidget):
 
         elif self.text == 'reset':
              self.text_box.setText('')
-
+             self.display_img.setText('Image will appear here')
 
 if __name__ in '__main__':
     app = QApplication([])

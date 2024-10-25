@@ -8,3 +8,14 @@ class Quiz(QWidget):
         self.answer = None
         self.difficulty = None
 
+        # App setting
+        self.setWindowTitle('Quiz Game')
+        self.resize(300, 400)
+
+        # App widgets
+        self.question_box = QLabel('Ask Question')
+        self.start = QPushButton('start')
+        self.skip = QPushButton('skip')
+        self.end = QPushButton('end quiz')
+
+

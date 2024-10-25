@@ -11,6 +11,7 @@ class GenQr(QWidget):
         super().__init__()
         self.name = None
         self.text = None
+
         # App Settings
         self.setWindowTitle('QR CODE GENERATOR')
         self.resize(400, 250)

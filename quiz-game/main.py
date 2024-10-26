@@ -25,7 +25,6 @@ class Quiz(QWidget):
         self.setMinimumWidth(350)
         self.setMinimumHeight(400)
 
-
         # App widgets
         # App text
         font = QFont('../font/poppin/Poppins-medium.ttf', 18) # default app font
@@ -96,7 +95,7 @@ class Quiz(QWidget):
         # show question and update question
     def display_question(self):
         if self.current_question_index < len(quiz_questions):
-            current_question = quiz_questions[self.current_question_index]
+            current_question = quiz_questions[self.current_question_index ]
             self.question_box.setText(current_question['question'])
             self.create_answer_button(current_question['options'])
         else:

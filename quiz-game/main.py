@@ -46,6 +46,7 @@ class Quiz(QWidget):
 
         # connect functions btn
         self.start_btn.clicked.connect(self.start_quiz)
+
         # App layouts
         self.main_layout = QVBoxLayout()
         self.answers_layout = QVBoxLayout()
@@ -74,24 +75,42 @@ class Quiz(QWidget):
         self.display_question()
 
         # button creation and deletion handler
-    def create_answer_button(self, option):
+    def create_answer_button(self, options):
         # first clear existing layout
         for button in self.answer_buttons:
-            self.answers_layout.removeLayout(button)
+            self.answers_layout.removeWidget(button)
             button.deleteLater()
         self.answer_buttons.clear()
 
         # second create new button
-        for option in option:
+        for option in options:
             button = QPushButton(option)
+            button.clicked.connect(lambda _, ans=option: self.check_answer(ans))
             self.answers_layout.addWidget(button)
             self.answer_buttons.append(button)
 
+        # show question and update question
     def display_question(self):
         if self.current_question_index < len(quiz_questions):
             current_question = quiz_questions[self.current_question_index]
             self.question_box.setText(current_question['question'])
             self.create_answer_button(current_question['options'])
+
+        # check if user selection is same as answer to question
+    def check_answer(self, picked_answer):
+        current_question = quiz_questions[self.current_question_index]
+        print('clicked')
+        print(self.current_question_index)
+        if picked_answer == current_question['answer']:
+            self.score += 1
+            self.score_label.setText(f"current score: {self.score}")
+        self.next_question()
+
+        # update question everytime user makes a choice
+    def next_question(self):
+        self.current_question_index += 1
+        self.display_question()
+
 
 # start/ init app
 if __name__ in '__main__':

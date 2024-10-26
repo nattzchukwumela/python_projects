@@ -22,13 +22,16 @@ class Quiz(QWidget):
     def setup_ui(self):
         # App setting
         self.setWindowTitle('Quiz Game')
-        self.resize(350, 300)
+        self.setMinimumWidth(350)
+        self.setMinimumHeight(400)
+
 
         # App widgets
         # App text
         font = QFont('../font/poppin/Poppins-medium.ttf', 18) # default app font
         self.question_box = QLabel('click start to begin')
         self.question_box.setFont(font)
+        self.question_box.setWordWrap(True)
         self.question_box.setAlignment(Qt.AlignCenter)
 
         #track score

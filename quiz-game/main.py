@@ -71,9 +71,27 @@ class Quiz(QWidget):
         self.start_btn.setEnabled(False)
         self.end_btn.setEnabled(True)
         self.skip_btn.setEnabled(True)
-        # self.show_question()
+        self.display_question()
 
+        # button creation and deletion handler
+    def create_answer_button(self, option):
+        # first clear existing layout
+        for button in self.answer_buttons:
+            self.answers_layout.removeLayout(button)
+            button.deleteLater()
+        self.answer_buttons.clear()
 
+        # second create new button
+        for option in option:
+            button = QPushButton(option)
+            self.answers_layout.addWidget(button)
+            self.answer_buttons.append(button)
+
+    def display_question(self):
+        if self.current_question_index < len(quiz_questions):
+            current_question = quiz_questions[self.current_question_index]
+            self.question_box.setText(current_question['question'])
+            self.create_answer_button(current_question['options'])
 
 # start/ init app
 if __name__ in '__main__':
